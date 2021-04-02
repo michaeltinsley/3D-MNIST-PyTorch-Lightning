@@ -43,7 +43,10 @@ class MNIST3DDataset(Dataset):
         :return: The indexed datum and corresponding label
         """
         voxel, target = self.data[index], int(self.targets[index])
-        return torch.reshape(voxel, self.output_shape), target  # pylint: disable=no-member
+        return (
+            torch.reshape(voxel, self.output_shape),  # pylint: disable=no-member
+            target,
+        )
 
     def __len__(self) -> int:
         """
@@ -63,7 +66,9 @@ class MNIST3DDataset(Dataset):
             x_data = h5_file[f"X_{'train' if self.train else 'test'}"][:]
             y_data = h5_file[f"y_{'train' if self.train else 'test'}"][:]
 
-        return torch.tensor(x_data), torch.tensor(y_data)  # pylint: disable=not-callable
+        return torch.tensor(x_data), torch.tensor(  # pylint: disable=not-callable
+            y_data
+        )
 
 
 class MNIST3DDataModule(LightningDataModule):
