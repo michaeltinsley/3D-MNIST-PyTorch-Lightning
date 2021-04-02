@@ -130,8 +130,8 @@ class MNIST3DDataModule(LightningDataModule):
         self.download_data()
 
     def setup(
-        self, stage: Optional[str] = None
-    ) -> None:  # pylint: disable=unused-argument
+        self, stage: Optional[str] = None  # pylint: disable=unused-argument
+    ) -> None:
         """
         Load and prepare the dataset.
 
