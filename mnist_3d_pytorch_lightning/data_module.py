@@ -123,17 +123,17 @@ class MNIST3DDataModule(LightningDataModule):
             unzip=True,
         )
 
-    def prepare_data(self, *args, **kwargs) -> None:
+    def prepare_data(self, *args, **kwargs) -> None:  # pylint: disable=unused-argument
         """
         Download the dataset.
         """
         self.download_data()
 
-    def setup(self, stage: Optional[str] = None) -> None:
+    def setup(self, stage: Optional[str] = None) -> None:  # pylint: disable=unused-argument
         """
         Load and prepare the dataset.
 
-        :param stage:
+        :param stage: Unused stage var
         """
         train_dataset = MNIST3DDataset(dataset_path=self.dataset_path, train=True)
         val_split = round(len(train_dataset) * self.validation_split)
