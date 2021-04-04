@@ -19,7 +19,7 @@ class MNIST3DDataset(Dataset):
         self,
         dataset_path: str,
         train: bool = True,
-        output_shape: Tuple[int, int, int] = (16, 16, 16),
+        output_shape: Tuple[int, int, int] = (1, 16, 16, 16),
     ) -> None:
         """
         Parses the 3D MNIST dataset into a PyTorch Dataset object.
