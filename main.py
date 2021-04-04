@@ -3,7 +3,7 @@
 """
 from configparser import ConfigParser
 
-from comet_ml import Experiment  # pylint: disable=unused-import
+from comet_ml import Experiment  # noqa # pylint: disable=unused-import
 from pytorch_lightning import Trainer
 from pytorch_lightning.loggers import CometLogger
 
