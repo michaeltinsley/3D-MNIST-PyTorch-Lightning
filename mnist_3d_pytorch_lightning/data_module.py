@@ -66,8 +66,9 @@ class MNIST3DDataset(Dataset):
             x_data = h5_file[f"X_{'train' if self.train else 'test'}"][:]
             y_data = h5_file[f"y_{'train' if self.train else 'test'}"][:]
 
-        return torch.tensor(x_data), torch.tensor(  # pylint: disable=not-callable
-            y_data
+        return (
+            torch.tensor(x_data).float(),  # pylint: disable=not-callables
+            torch.tensor(y_data),
         )
 
 

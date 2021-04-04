@@ -14,4 +14,6 @@ Kaggle credentials must [be provided](https://github.com/Kaggle/kaggle-api#api-c
 
 ## Model
 
-- Placeholder
+A simple 3D CNN model.
+
+![model](./media/model.onnx.png)
