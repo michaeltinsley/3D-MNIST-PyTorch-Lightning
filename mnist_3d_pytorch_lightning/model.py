@@ -75,8 +75,8 @@ class MNIST3DCNN(LightningModule):  # pylint: disable=too-many-ancestors
         return model
 
     def forward(
-        self, x: torch.Tensor
-    ) -> torch.Tensor:  # pylint: disable=arguments-differ,unused-argument
+        self, x: torch.Tensor  # pylint: disable=invalid-name
+    ) -> torch.Tensor:
         """
         Forward defines the prediction/inference actions.
 
