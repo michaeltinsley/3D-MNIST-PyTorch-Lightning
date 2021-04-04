@@ -19,7 +19,7 @@ class MNIST3DDataset(Dataset):
         self,
         dataset_path: str,
         train: bool = True,
-        output_shape: Tuple[int, int, int] = (16, 16, 16),
+        output_shape: Tuple[int, int, int] = (1, 16, 16, 16),
     ) -> None:
         """
         Parses the 3D MNIST dataset into a PyTorch Dataset object.
@@ -66,8 +66,9 @@ class MNIST3DDataset(Dataset):
             x_data = h5_file[f"X_{'train' if self.train else 'test'}"][:]
             y_data = h5_file[f"y_{'train' if self.train else 'test'}"][:]
 
-        return torch.tensor(x_data), torch.tensor(  # pylint: disable=not-callable
-            y_data
+        return (
+            torch.tensor(x_data).float(),  # pylint: disable=not-callable
+            torch.tensor(y_data),  # pylint: disable=not-callable
         )
 
 

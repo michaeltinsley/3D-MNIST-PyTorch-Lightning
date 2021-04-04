@@ -1,4 +1,7 @@
 data/
+lightning_logs/
+config.ini
+3d-mnist/
 
 # Created by .ignore support plugin (hsz.mobi)
 ### macOS template
