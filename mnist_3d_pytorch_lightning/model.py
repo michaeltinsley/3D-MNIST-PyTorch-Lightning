@@ -2,12 +2,12 @@
 Simple 3D CNN model.
 """
 from typing import Tuple
-from .data_module import MNIST3DDataModule
-from pytorch_lightning import LightningModule
+
 import torch
+from pytorch_lightning import LightningModule
 
 
-class MNIST3DCNN(LightningModule):
+class MNIST3DCNN(LightningModule):  # pylint: disable=too-many-ancestors
     """
     A simple 3D CNN classification PyTorch Lightning module.
     """
@@ -29,9 +29,12 @@ class MNIST3DCNN(LightningModule):
         self.input_dimension = input_dimension
 
         self.model = self.init_model()
-        self._example_input_array = torch.randn((1, *self.input_dimension))
+        self._example_input_array = torch.randn(  # pylint: disable=no-member
+            (1, *self.input_dimension)
+        )
 
-    def conv_block(self, in_channels: int, out_channels: int) -> torch.nn.Sequential:
+    @staticmethod
+    def conv_block(in_channels: int, out_channels: int) -> torch.nn.Sequential:
         """
         Builds a repeatable convolutional block.
 
@@ -71,7 +74,9 @@ class MNIST3DCNN(LightningModule):
 
         return model
 
-    def forward(self, x: torch.Tensor) -> torch.Tensor:
+    def forward(
+        self, x: torch.Tensor
+    ) -> torch.Tensor:  # pylint: disable=arguments-differ,unused-argument
         """
         Forward defines the prediction/inference actions.
 
@@ -81,7 +86,11 @@ class MNIST3DCNN(LightningModule):
         output = self.model(x)
         return torch.nn.functional.log_softmax(output, dim=-1)
 
-    def training_step(self, batch: Tuple[torch.Tensor, torch.Tensor], batch_idx: int) -> float:
+    def training_step(
+        self,
+        batch: Tuple[torch.Tensor, torch.Tensor],
+        batch_idx: int,  # pylint: disable=unused-argument
+    ) -> float:
         """
         Returns the training loss and logs loss.
 
@@ -89,35 +98,43 @@ class MNIST3DCNN(LightningModule):
         :param batch_idx: The index of the given batch
         :return: The training loss
         """
-        x, y = batch
-        y_hat = self(x)
-        loss = torch.nn.functional.cross_entropy(y_hat, y)
-        self.log('train_loss', loss)
+        x_data, y_data = batch
+        y_hat = self(x_data)
+        loss = torch.nn.functional.cross_entropy(y_hat, y_data)
+        self.log("train_loss", loss)
         return loss
 
-    def validation_step(self, batch: Tuple[torch.Tensor, torch.Tensor], batch_idx: int) -> None:
+    def validation_step(
+        self,
+        batch: Tuple[torch.Tensor, torch.Tensor],
+        batch_idx: int,  # pylint: disable=unused-argument
+    ) -> None:
         """
         Logs the validation loss.
 
         :param batch: The input and target validation data
         :param batch_idx: The index of the given batch
         """
-        x, y = batch
-        y_hat = self(x)
-        loss = torch.nn.functional.cross_entropy(y_hat, y)
-        self.log('val_loss', loss)
+        x_data, y_data = batch
+        y_hat = self(x_data)
+        loss = torch.nn.functional.cross_entropy(y_hat, y_data)
+        self.log("val_loss", loss)
 
-    def test_step(self, batch: Tuple[torch.Tensor, torch.Tensor], batch_idx: int) -> None:
+    def test_step(
+        self,
+        batch: Tuple[torch.Tensor, torch.Tensor],
+        batch_idx: int,  # pylint: disable=unused-argument
+    ) -> None:
         """
         Logs the test loss.
 
         :param batch: The input and target test data
         :param batch_idx: The index of the given batch
         """
-        x, y = batch
-        y_hat = self(x)
-        loss = torch.nn.functional.cross_entropy(y_hat, y)
-        self.log('test_loss', loss)
+        x_data, y_data = batch
+        y_hat = self(x_data)
+        loss = torch.nn.functional.cross_entropy(y_hat, y_data)
+        self.log("test_loss", loss)
 
     def configure_optimizers(self) -> torch.optim.Optimizer:
         """
